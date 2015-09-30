@@ -51,6 +51,7 @@ options:
   localexec:
     description:
       - Relative path to bower executable from install path
+    default: false
     required: false
   state:
     description:
@@ -176,7 +177,7 @@ def main():
         offline=dict(default='no', type='bool'),
         production=dict(default='no', type='bool'),
         path=dict(required=True),
-        localexec=dict(required=False),
+        localexec=dict(default=False, required=False),
         state=dict(default='present', choices=['present', 'absent', 'latest', ]),
         version=dict(default=None),
     )
