@@ -103,9 +103,9 @@ class Bower(object):
             cmd = []
 
             if self.relative_execpath:
-                if not os.path.isdir(os.path.join(self.path, self.relative_execpath)):
-                    self.module.fail_json(msg="relative path %s is not a directory" % self.relative_execpath)
                 cmd.append(os.path.join(self.path, self.relative_execpath, "bower"))
+                if not os.path.isfile(cmd[-1]):
+                    self.module.fail_json(msg="bower not found at relative path %s" % self.relative_execpath)
             else:
                 cmd.append("bower")
 
