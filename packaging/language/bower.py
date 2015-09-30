@@ -48,7 +48,7 @@ options:
     description:
       - The base path where to install the bower packages
     required: true
-  localexec:
+  relative_execpath:
     description:
       - Relative path to bower executable from install path
     default: false
@@ -90,7 +90,7 @@ class Bower(object):
         self.offline = kwargs['offline']
         self.production = kwargs['production']
         self.path = kwargs['path']
-        self.localexec = kwargs['localexec']
+        self.relative_execpath = kwargs['relative_execpath']
         self.version = kwargs['version']
 
         if kwargs['version']:
@@ -102,10 +102,10 @@ class Bower(object):
         if not self.module.check_mode or (self.module.check_mode and run_in_check_mode):
             cmd = []
 
-            if self.localexec:
-                if not os.path.isdir(os.path.join(self.path, self.localexec)):
-                    self.module.fail_json(msg="relative path %s is not a directory" % self.localexec)
-                cmd.append(os.path.join(self.path, self.localexec, "bower"))
+            if self.relative_execpath:
+                if not os.path.isdir(os.path.join(self.path, self.relative_execpath)):
+                    self.module.fail_json(msg="relative path %s is not a directory" % self.relative_execpath)
+                cmd.append(os.path.join(self.path, self.relative_execpath, "bower"))
             else:
                 cmd.append("bower")
 
@@ -177,7 +177,7 @@ def main():
         offline=dict(default='no', type='bool'),
         production=dict(default='no', type='bool'),
         path=dict(required=True),
-        localexec=dict(default=False, required=False),
+        relative_execpath=dict(default=False, required=False),
         state=dict(default='present', choices=['present', 'absent', 'latest', ]),
         version=dict(default=None),
     )
@@ -189,14 +189,14 @@ def main():
     offline = module.params['offline']
     production = module.params['production']
     path = os.path.expanduser(module.params['path'])
-    localexec = os.path.expanduser(module.params['localexec'])
+    relative_execpath = os.path.expanduser(module.params['relative_execpath'])
     state = module.params['state']
     version = module.params['version']
 
     if state == 'absent' and not name:
         module.fail_json(msg='uninstalling a package is only available for named packages')
 
-    bower = Bower(module, name=name, offline=offline, production=production, path=path, localexec=localexec, version=version)
+    bower = Bower(module, name=name, offline=offline, production=production, path=path, relative_execpath=relative_execpath, version=version)
 
     changed = False
     if state == 'present':
