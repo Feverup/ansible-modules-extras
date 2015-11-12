@@ -83,7 +83,7 @@ description: Update packages based on bower.json to their latest version.
 
 description: install bower locally and run from there
 - npm: path=/app/location name=bower global=no
-- bower: path=/app/location localexec=node_modules/.bin
+- bower: path=/app/location relative_execpath=node_modules/.bin
 '''
 
 
