@@ -51,7 +51,7 @@ options:
   relative_execpath:
     description:
       - Relative path to bower executable from install path
-    default: false
+    default: null
     required: false
   state:
     description:
