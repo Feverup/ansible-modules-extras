@@ -193,7 +193,7 @@ def main():
     offline = module.params['offline']
     production = module.params['production']
     path = os.path.expanduser(module.params['path'])
-    relative_execpath = os.path.expanduser(module.params['relative_execpath'])
+    relative_execpath = module.params['relative_execpath']
     state = module.params['state']
     version = module.params['version']
 
