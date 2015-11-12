@@ -53,6 +53,7 @@ options:
       - Relative path to bower executable from install path
     default: null
     required: false
+    version_added: "2.0"
   state:
     description:
       - The state of the bower package
